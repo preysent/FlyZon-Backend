@@ -2,7 +2,7 @@ require('dotenv').config() // use to excess envirement variable
 const express = require('express')
 const dbConnect = require('./db')
 const app = express()
-const port = process.env.API_PORT
+const port = process.env.API_PORT || 5000
 const host = process.env.API_HOST
 
 // database connection
