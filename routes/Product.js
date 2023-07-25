@@ -13,7 +13,7 @@ const { body, validationResult } = require('express-validator');
 // Route 1: adding new product to the list
 router.post('/add', getUserId, [
 
-    body('name').isLength({ min: 5 }),
+    body('productTitle').isLength({ min: 5 }),
     body('description').notEmpty(),
     body('price').notEmpty(),
     body('brand').notEmpty(),
@@ -39,11 +39,11 @@ router.post('/add', getUserId, [
 
 
 
-        const { name, description, price, brand, category, stock, images } = req.body
+        const { productTitle, description, price, brand, category, stock, images } = req.body
         const sellerId = req.user.id
 
         const newProduct = await product.create({
-            name,
+            productTitle,
             sellerId,
             description,
             price,
@@ -86,10 +86,10 @@ router.put('/update/:id', getUserId, async (req, res) => {
 
 
         //getting value for updation
-        const { name, description, price, brand, category, stock, images  } = req.body
+        const { productTitle, description, price, brand, category, stock, images  } = req.body
 
         const ProductFilds = {}
-        if (name) ProductFilds.productTitle = productTitle
+        if (productTitle) ProductFilds.productTitle = productTitle
         if (description) ProductFilds.description = description
         if (price) ProductFilds.price = price
         if (brand) ProductFilds.brand = brand

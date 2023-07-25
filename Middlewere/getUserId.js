@@ -14,6 +14,7 @@ const getUserId = (req, res, next) => {
 
         next();
     } catch (err) {
+        cosole.log(err)
         res.status(400).json({ msg: "Invalid token" , login:false});
     }
 
