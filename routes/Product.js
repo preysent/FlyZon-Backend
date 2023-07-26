@@ -86,7 +86,7 @@ router.put('/update/:id', getUserId, async (req, res) => {
 
 
         //getting value for updation
-        const { productTitle, description, price, brand, category, stock, images  } = req.body
+        const { productTitle, description, price, brand, category, stock, images } = req.body
 
         const ProductFilds = {}
         if (productTitle) ProductFilds.productTitle = productTitle
@@ -164,14 +164,15 @@ router.get('/fetch/:category', async (req, res) => {
 // Route 5: get one single product
 router.get('/:id', async (req, res) => {
 
-    try{
+    try {
         // getting the product details
-        const Product = await product.findById({_id:req.params.id})
-        
+        const Product = await product.findById({ _id: req.params.id })
+
         res.json(Product)
 
     } catch (err) {
-        res.send({ err })
+        console.error(err);
+        res.status(500).json({ msg: "Internal server error" });
     }
 
 })
