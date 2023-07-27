@@ -23,6 +23,7 @@ app.use('/api/user', require('./routes/auth'));
 app.use('/api/product', require('./routes/Product')) 
 app.use('/api/order', require('./routes/Order')) 
 app.use('/api/cart', require('./routes/Cart'))
+app.use('/api/seller', require('./routes/Seller'))
 
   
 app.listen(port, () => {
