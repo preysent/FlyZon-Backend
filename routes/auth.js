@@ -69,7 +69,7 @@ router.post('/create', [
       seller
     })
 
-
+ 
     //creating data for generating jwt
     const data = {
       user: {

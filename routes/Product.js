@@ -11,15 +11,15 @@ const { body, validationResult } = require('express-validator');
 
 
 // Route 1: adding new product to the list
-router.post('/add', getUserId, [
+router.post('/', getUserId, [
 
     body('productTitle').isLength({ min: 5 }),
-    body('description').notEmpty(),
+    body('description').notEmpty().isArray(),
     body('price').notEmpty(),
     body('brand').notEmpty(),
     body('category').notEmpty(),
     body('stock').notEmpty(),
-    body('images').notEmpty(),
+    body('images').notEmpty().isArray(),
 
 
 ], async (req, res) => {
@@ -32,10 +32,10 @@ router.post('/add', getUserId, [
         }
 
 
-        // //Checking if it user then return invalid
-        // if (req.user.seller) {
-        //     return res.json({ msg: "invalid user" })
-        // }
+        //Checking if it user then return invalid
+        if (!req.user.seller) {
+            return res.json({ msg: "invalid user" })
+        }
 
 
 
@@ -65,13 +65,24 @@ router.post('/add', getUserId, [
 
 
 // Route 2: updating the existing product
-router.put('/update/:id', getUserId, async (req, res) => {
+router.put('/:id', getUserId, [
+
+    body('productTitle').isLength({ min: 5 }),
+    body('description'),
+    body('price').isInt(),
+    body('brand'),
+    body('category'),
+    body('stock').isInt(),
+    body('images'),
+
+
+], async (req, res) => {
 
     try {
-        // //Checking if it user then return invalid 
-        // if (req.user.seller) {
-        //     return res.json({ msg: "invalid user" })
-        // }
+        //Checking if it user then return invalid 
+        if (!req.user.seller) {
+            return res.json({ msg: "invalid user" })
+        }
 
 
         // getting the product from db
@@ -113,10 +124,10 @@ router.put('/update/:id', getUserId, async (req, res) => {
 // Route 3: deleting the existing product
 router.delete('/delete/:id', getUserId, async (req, res) => {
 
-    // //Checking if it user then return invalid 
-    // if (req.user.seller) {
-    //     return res.json({ msg: "invalid user" })
-    // }
+    //Checking if it user then return invalid 
+    if (req.user.seller) {
+        return res.json({ msg: "invalid user" })
+    }
 
 
     try {
