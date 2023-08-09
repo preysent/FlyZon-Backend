@@ -31,12 +31,10 @@ router.post('/', getUserId, [
 
         }
 
-
         //Checking if it user then return invalid
         if (!req.user.seller) {
             return res.json({ msg: "invalid user" })
         }
-
 
 
         const { productTitle, description, price, brand, category, stock, images } = req.body
@@ -54,7 +52,7 @@ router.post('/', getUserId, [
         })
 
         // res.json({ msg: "product created" })
-        return res.json(newProduct)
+        return res.json({ status: true })
 
     } catch (err) {
         res.send({ msg: "some error accour" })
@@ -188,5 +186,18 @@ router.get('/:id', async (req, res) => {
 
 })
 
+
+// Route 6: search product from db /search/searchString
+router.get('/search/:searchStr', async (req, res) => {
+    try {
+        // creating regular expression for search | not case sencitive
+        const sr = RegExp(req.params.searchStr, "i")
+        const products = await product.find({ productTitle: sr })
+        res.json(products)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Internal server error" });
+    }
+})
 
 module.exports = router
