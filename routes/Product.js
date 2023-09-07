@@ -108,7 +108,8 @@ router.put('/:id', getUserId, [
 
         const newProduct = await product.findByIdAndUpdate(req.params.id, { $set: ProductFilds }, { new: true })
 
-        res.json(newProduct)
+      
+       return res.json({ status: true })
 
     } catch (err) {
         res.send({ err })

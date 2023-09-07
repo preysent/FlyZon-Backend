@@ -22,7 +22,7 @@ router.get('/products', getUserId, async (req, res) => {
         if (!Seller.seller) return res.status(400).json({ msg: "seller not valid" })
 
         // finding the seller products
-        const products = await Product.find({ sellerId: req.user.id }).select('productTitle').select('category').select('price').select('stock')
+        const products = await Product.find({ sellerId: req.user.id })
         res.json({status:true,productList:products})
 
     } catch (err) {
