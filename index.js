@@ -25,7 +25,9 @@ app.use('/api/order', require('./routes/Order'))
 app.use('/api/cart', require('./routes/Cart'))
 app.use('/api/seller', require('./routes/Seller'))
 
-  
+app.get('/',(req,res)=>{
+  res.send("welcome to new brance for MVC update")
+})
 app.listen(port, () => {
   console.log(`Example app listening on http://${host}:${port}`)
 })
